@@ -15,7 +15,7 @@ class App(ttk.Frame):
         self.pack()
 
         self.st = 0  # スタート位置
-        self.go = 15  # ゴール一
+        self.go = 15  # ゴール位置
         self.end = 10  # 何問で終了するか
         self.i = 0  # 間違えた回数のカウント
         self.k = 0  # 問題数
