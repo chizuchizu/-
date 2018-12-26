@@ -1,3 +1,8 @@
+"""
+【百人一首練習ソフト】
+こちらはタイム測定が行なえます。
+"""
+
 import tkinter as tk
 import tkinter.ttk as ttk
 import pandas as pd
@@ -10,12 +15,19 @@ import time
 
 
 class App(ttk.Frame):
+    """
+    メインのクラスです。
+    """
     def __init__(self, app):
+        """
+        初期化を行います
+        :param app: Tkinterのフレーム
+        """
         super().__init__(app)
         self.pack()
 
         self.st = 0  # スタート位置
-        self.go = 15  # ゴール位置
+        self.go = 15  # ゴール一
         self.end = 10  # 何問で終了するか
         self.i = 0  # 間違えた回数のカウント
         self.k = 0  # 問題数
@@ -89,7 +101,12 @@ class App(ttk.Frame):
         # self.question()
 
     def fin(self, event=0):
-        """終了"""
+        """
+        プログラムの終了を行います
+        :param event: 何にも使いませんが、引数で渡されてしまうので置いています。
+        ボタンからはeventが引数。キーからは引数なし。
+        :return: 無し
+        """
         goal = time.time()
         # 本当に終了するか確認
         ret = messagebox.askyesno('確認', 'ウィンドウを閉じますか？')
@@ -101,6 +118,10 @@ class App(ttk.Frame):
             sys.exit()
 
     def timeout(self):
+        """
+        正解数がある数を超えた時、結果を表示します
+        :return: 無し
+        """
         goal = time.time()
         elapsed_time = goal - self.start
         goes = str(self.st) + "番から" + str(self.go) + "番まで, " + str(self.end) + "問正解で終了."
@@ -112,7 +133,10 @@ class App(ttk.Frame):
                 print("セーブ")
 
     def save(self, tm):
-        """問題数、間違えた回数をcsvファイルに保存"""
+        """
+        問題数、間違えた回数をcsvファイルに保存
+        :return 無し
+        """
         # 日付を取得
         date = datetime.date.today()
         date.isoformat()
@@ -126,7 +150,10 @@ class App(ttk.Frame):
             writer.writerow(save_data)
 
     def question(self):
-        """問題作成"""
+        """
+        問題作成
+        :return: 無し
+        """
         if sum(self.times) - sum(self.miss) == self.end:  # 正解数が10(通常)になったら…
             self.timeout()
         else:
@@ -148,7 +175,11 @@ class App(ttk.Frame):
             self.times[self.o] += 1  # 問題数をカウント
 
     def over(self):
-        """回数オーバーか判定"""
+        """
+        回数オーバーか判定
+
+        :return: TrueかFalse
+        """
         if self.i == self.chance:
             print("回数オーバーです")
             self.miss[self.o] += 1
@@ -157,7 +188,11 @@ class App(ttk.Frame):
             return False
 
     def decision(self, event=0):  # eventは使わない
-        """正解か不正解か判定"""
+        """
+        正解か不正解か判定
+        :param event: 上と同じく使わない
+        :return: 無し
+        """
         if self.k == 0:
             self.incorrect.set("")
             self.start = time.time()
